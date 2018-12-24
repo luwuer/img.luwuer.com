@@ -1,4 +1,4 @@
-# img-service.luwuer.com
+# img.luwuer.com
 
 ## Project setup
 ```
