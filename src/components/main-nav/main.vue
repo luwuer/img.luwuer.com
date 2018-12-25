@@ -13,7 +13,7 @@
                 effect="dark"
                 :content="nav.title"
                 placement="right">
-      <div class="nav-item">
+      <div class="nav-item" @click="toNav(nav.to)">
         <svg aria-hidden="true"
              class="icon">
           <use :xlink:href="nav.icon"></use>
@@ -46,6 +46,9 @@ export default {
     headClick() {
       // https://api.weibo.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI
       console.log(123)
+    },
+    toNav(to) {
+      this.$router.replace(to)
     }
   }
 }
