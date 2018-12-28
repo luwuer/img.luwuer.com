@@ -3,11 +3,11 @@ import App from './App.vue'
 import router from './router'
 import { Tooltip } from 'element-ui'
 
+import '@public/config.js'
 import 'element-ui/packages/theme-chalk/lib/tooltip.css'
 
 Vue.config.productionTip = false
 Vue.use(Tooltip)
-// Vue.component(ToolTip.name, ToolTip)
 
 new Vue({
   router,

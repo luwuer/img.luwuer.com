@@ -1,5 +1,3 @@
-// const path = require('path')
-
 // 多线程压缩js
 // const WebpackParalleUglify = require('webpack-parallel-uglify-plugin')
 
@@ -9,6 +7,12 @@
 // 打包过程中各个模块、插件占用时间精确统计
 // const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 // const smp = new SpeedMeasurePlugin()
+
+const path = require('path')
+
+const resolve = function(dir) {
+  return path.join(__dirname, dir)
+}
 
 module.exports = {
   // 基本路径
@@ -37,6 +41,14 @@ module.exports = {
   chainWebpack: () => {},
 
   configureWebpack: () => {
+    return {
+      resolve: {
+        alias: {
+          '@': resolve('src'),
+          '@public': resolve('public')
+        }
+      }
+    }
     // return smp.wrap({
     //   resolve: {
     //     alias: {
@@ -112,7 +124,15 @@ module.exports = {
 
     hotOnly: false,
 
-    proxy: null // 设置代理
+    proxy: {
+      weibo: {
+        target: 'https://api.weibo.com',
+        changeOrigin: true,
+        pathRewrite: {
+          'weibo': '/'
+        }
+      }
+    }
   },
 
   // 第三方插件配置
