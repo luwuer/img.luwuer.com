@@ -3,8 +3,9 @@
 
     <a class="head-portrait"
        @click="headClick"
+       :title="name"
        :href="weiboAuthUrl">
-      <img src=""
+      <img src="avator"
            alt="">
     </a>
 
@@ -25,7 +26,7 @@
 </template>
 
 <script>
-import { weiboAuth2Authorize, weiboAuth2AccessToken } from '@/assets/js/api/weibo'
+import { weiboAuth2AccessToken } from '@/assets/js/api/weibo'
 
 export default {
   name: 'main-nav',
@@ -44,7 +45,6 @@ export default {
         }
       ],
       code: ''
-      // REDIRECT_URI: '127.0.0.1:8080'
     }
   },
   computed: {
@@ -53,52 +53,47 @@ export default {
         config.weibo.CLIENT_ID
       }&response_type=code&redirect_uri=${config.weibo.REDIRECT_URI}`
 
-      // if (this.code) {
-      //   url = `https://api.weibo.com/oauth2/access_token?client_id=${
-      //     this.CLIENT_ID
-      //   }&client_secret=${
-      //     this.CLIENT_SECRET
-      //   }&grant_type=authorization_code&redirect_uri=${
-      //     this.REDIRECT_URI
-      //   }&code=${this.code}`
-      // }
+      if (this.code) {
+        url = 'https://weibo.com'
+      }
 
       return url
-      // return ''
-    }
-  },
-  methods: {
-    headClick() {
-      // weiboAuth2Authorize(
-      //   config.weibo.CLIENT_ID,
-      //   config.weibo.REDIRECT_URI
-      // ).then(data => {
-      //   console.log(data)
-      //   console.log('------------')
-      // })
     },
-    toNav(to) {
-      this.$router.replace(to)
+    avator() {
+      return store.weibo.avator
+    },
+    name() {
+      return store.weibo.name
     }
-  },
-  created() {
-    this.code = this.$route.query.code
-    // https://api.weibo.com/oauth2/access_token?client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=authorization_code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI&code=code
   },
   watch: {
     code(newVal) {
       if (newVal) {
-        weiboAuth2AccessToken(
-          config.weibo.CLIENT_ID,
-          config.weibo.CLIENT_SECRET,
-          config.weibo.REDIRECT_URI,
-          'authorization_code',
-          this.code
-        ).then(data => {
-          console.log(data)
-        })
+        this.getWeiboAuth2AccessToken()
       }
     }
+  },
+  methods: {
+    headClick() {
+
+    },
+    toNav(to) {
+      this.$router.replace(to)
+    },
+    getWeiboAuth2AccessToken() {
+      weiboAuth2AccessToken(
+        config.weibo.CLIENT_ID,
+        config.weibo.CLIENT_SECRET,
+        config.weibo.REDIRECT_URI,
+        'authorization_code',
+        this.code
+      ).then(data => {
+        store.weibo.setAuth(data)
+      })
+    }
+  },
+  created() {
+    this.code = this.$route.query.code
   }
 }
 </script>

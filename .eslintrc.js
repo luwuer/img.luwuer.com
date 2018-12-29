@@ -50,6 +50,7 @@ module.exports = {
     parser: 'babel-eslint'
   },
   globals: {
-    config: true
+    config: true,
+    store: true
   }
 }

@@ -13,6 +13,7 @@ window.config = {
   weibo: {
     CLIENT_ID: '2542429913',
     CLIENT_SECRET: '37778a16f5552f180a68c06de06a2cdb',
-    REDIRECT_URI: 'img.luwuer.com'
+    REDIRECT_URI: 'img.luwuer.com',
+    PAGE_COUNT: 20
   }
 }
